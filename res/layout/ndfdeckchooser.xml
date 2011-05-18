@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:orientation="vertical">
+    <ListView 
+    	android:layout_width="match_parent" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/ndfdeckchooserListView" 
+		android:layout_weight="1"
+		android:choiceMode="singleChoice"/>
+    <LinearLayout 
+    	android:id="@+id/ndfdeckchooserFooter" 
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">
+        <Button 
+        	android:id="@+id/ndfdeckchooserButtonResume" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content" 
+        	android:text="@string/labelResume"/>
+        <Button 
+        	android:id="@+id/ndfdeckchooserButtonQuiz" 
+        	android:layout_width="@dimen/widthDeckChooserButton" 
+        	android:layout_height="wrap_content" 
+        	android:text="@string/labelQuiz"/>
+        <Button 
+        	android:id="@+id/ndfdeckchooserButtonNew"
+        	android:layout_width="@dimen/widthDeckChooserButton" 
+        	android:layout_height="wrap_content"  
+        	android:text="@string/labelNew"/>
+        <Button 
+        	android:id="@+id/ndfdeckchooserButtonEdit"
+        	android:layout_width="@dimen/widthDeckChooserButton" 
+        	android:layout_height="wrap_content" 
+        	android:text="@string/labelEdit"/>
+        <Button 
+        	android:id="@+id/ndfdeckchooserButtonDelete" 
+        	android:layout_width="@dimen/widthDeckChooserButton" 
+        	android:layout_height="wrap_content" 
+        	android:text="@string/labelDel"/>
+    </LinearLayout>
+</LinearLayout>

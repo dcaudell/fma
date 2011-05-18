@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/logbutton">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textFordPrefectQuote"
+         android:textColor="@color/colorWhite" 
+         android:gravity="center|left"/>
+    <ScrollView
+        android:id="@+id/logbuttonScrollView"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" 
+        android:layout_height="match_parent" 
+        android:layout_gravity="top" 
+        android:scrollbarAlwaysDrawHorizontalTrack="true">
+        <TextView 
+        	android:id="@+id/logbuttonTextView2" 
+        	android:layout_width="match_parent" 
+        	android:layout_height="match_parent" 
+        	android:textSize="5pt" 
+        	android:textColor="@color/colorLogText" 
+        	android:gravity="top" 
+        	android:layout_gravity="bottom|fill_vertical" 
+        	android:text="@string/titleLogOutput"/>
+    </ScrollView>
+    <LinearLayout
+    	android:orientation="horizontal"        
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="bottom" android:gravity="right">
+        <Button 
+        	android:text="@string/labelTest" 
+        	android:id="@+id/logbuttonButtonLog" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"/>
+        <Button 
+        	android:text="@string/labelClear" 
+        	android:id="@+id/logbuttonButtonClear" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

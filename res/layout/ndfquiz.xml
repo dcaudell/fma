@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" 
+  android:orientation="vertical">
+    <LinearLayout 
+    	android:layout_width="match_parent" 
+    	android:id="@+id/ndfquizLayoutHeader" 
+    	android:layout_height="wrap_content"  android:paddingTop="5dp">
+        <Button         	
+        	android:id="@+id/ndfquizButtonFlip"        	
+        	android:layout_width="fill_parent" 
+        	android:layout_height="wrap_content"
+        	android:text="@string/labelFlip"/>
+    </LinearLayout>
+    <RelativeLayout 
+    	android:id="@+id/ndfquizLayoutHost" 
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:layout_weight="1"
+    	android:background="@drawable/indexcard">
+    	<TextView 
+    		android:id="@+id/ndfquizLabelRemaining"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="5dp"   		
+    		android:text="Remaining: #"
+    		android:textColor="@color/colorBlack"/>
+    	<ScrollView
+	        android:id="@+id/ndfquizScrollView"
+	        android:layout_width="fill_parent"
+	        android:layout_weight="1" 
+	        android:layout_height="match_parent" 
+	        android:layout_gravity="top">
+	        <TextView 
+	        	android:id="@+id/ndfquizText" 
+	        	android:layout_width="match_parent" 
+	        	android:layout_height="match_parent" 
+	        	android:textSize="@dimen/fontscaleCardText" 
+	        	android:text="Card info goes here. May replace this view with an editor at runtime." 
+	        	android:textColor="@color/colorBlack" 
+	        	android:gravity="center" 
+	        	android:layout_gravity="center" 
+	        	android:layout_margin="5dp" 
+	        	android:minHeight="150dp"/>	        
+	    </ScrollView>    	
+	</RelativeLayout>  
+    <LinearLayout 
+    	android:id="@+id/ndfquizLayoutFooter" 
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal" 
+    	android:layout_width="fill_parent" 
+    	android:layout_gravity="center|bottom" 
+    	android:layout_marginTop="5dp">
+        <Button 
+        	android:id="@+id/ndfquizButtonCorrect" 
+        	android:layout_width="@dimen/widthCardButton" 
+        	android:layout_weight="0.3"
+        	android:text="@string/labelCorrect" 
+        	android:layout_height="wrap_content"/>
+        <Button 
+        	android:id="@+id/ndfquizButtonKinda" 
+        	android:layout_width="@dimen/widthCardButton"
+        	android:layout_weight="0.3" 
+        	android:text="@string/labelKinda" 
+        	android:layout_height="wrap_content"/>
+        <Button 
+        	android:id="@+id/ndfquizButtonIncorrect" 
+			android:layout_width="@dimen/widthCardButton"
+			android:layout_weight="0.3" 
+			android:text="@string/labelIncorrect" 
+			android:layout_height="wrap_content"/>    	
+	</LinearLayout>
+</LinearLayout>

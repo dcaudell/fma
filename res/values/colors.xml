@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAppText">#FFE4C4</color>
+    <color name="colorBackground">#006400</color>
+    <color name="colorDeckSelected">#007700</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorLogText">#7500FF00</color>
+</resources>

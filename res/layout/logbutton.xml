@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:background="@drawable/logbutton" android:gravity="bottom">
+    <LinearLayout android:layout_alignParentTop="true" android:id="@+id/linearLayout1" android:layout_height="match_parent" android:orientation="vertical" android:layout_width="match_parent">
+        <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/logbuttonTextView1" android:text="@string/textFordPrefectQuote" android:gravity="center_horizontal" android:textColor="@color/colorWhite"></TextView>
+        <TextView android:layout_width="match_parent" android:id="@+id/logbuttonTextView2" android:text="TextView" android:layout_height="match_parent" android:textSize="5pt" android:gravity="top" android:textColor="@color/colorLogText"></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <Button android:text="Log" android:layout_width="wrap_content" android:id="@+id/buttonLog" android:layout_height="wrap_content"></Button>
+        <Button android:text="Clear" android:id="@+id/buttonClear" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+</RelativeLayout>

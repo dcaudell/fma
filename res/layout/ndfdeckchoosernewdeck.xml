@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"   
+  android:padding="3dp"
+  android:theme="@android:style/Theme.Dialog">
+    <LinearLayout 
+    	android:id="@+id/ndfdeckchoosernewdeckLayoutHost" 
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:orientation="vertical"  
+    	android:layout_weight="1">
+        <TextView 
+        	android:id="@+id/ndfdeckchoosernewdeckLabelDeckName" 
+        	android:text="@string/labelDeckName" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"/>
+        <EditText
+        	android:id="@+id/ndfdeckchoosernewdeckName"
+        	android:layout_width="fill_parent" 
+        	android:layout_height="wrap_content"/>
+        <TextView 
+        	android:id="@+id/ndfdeckchoosernewdeckLabelDescription" 
+        	android:text="@string/labelDescription" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"/>
+        <AutoCompleteTextView 
+        	android:id="@+id/ndfdeckchoosernewdeckDescription"        	
+        	android:layout_width="fill_parent" 
+        	android:layout_height="fill_parent"/>
+    </LinearLayout>
+    <LinearLayout 
+    	android:id="@+id/ndfdeckchoosernewdeckLayoutFooter" 
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:layout_gravity="bottom">
+        <Button 
+        	android:id="@+id/ndfdeckchoosernewdeckButtonOk"
+        	android:layout_height="wrap_content"
+        	android:layout_width="match_parent"  
+        	android:layout_weight=".5" 
+        	android:text="@string/labelOk" />
+        <Button 
+        	android:id="@+id/ndfdeckchoosernewdeckButtonCancel"        	   
+        	android:layout_height="wrap_content"
+        	android:layout_width="match_parent"
+        	android:layout_weight=".5" 
+        	android:text="@string/labelCancel" />
+    </LinearLayout>
+</LinearLayout>
