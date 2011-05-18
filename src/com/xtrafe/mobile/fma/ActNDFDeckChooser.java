@@ -13,6 +13,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +34,12 @@ public class ActNDFDeckChooser extends ActBase {
 	static final int DIALOG_NEWDECK = 0;
 	static final int DIALOG_DELDECK = 1;
 
-	private ArrayList<String> fileNames;
+	private ArrayList<String> deckFilenames;
 	private ListView listView;
 	private View selectedView;
 	private ViewListAdapter viewListAdapter;
-	private String lastQuizDeck;
+	private String lastQuizDeckFilename;
+	private String quizFilename;
 	private int selectedDeck;	
 	
 		
@@ -55,14 +58,14 @@ public class ActNDFDeckChooser extends ActBase {
 		TextView lastModified = (TextView) view.findViewById(R.id.ndfdeckchoosermenuitemLastModified);
 		Date date = new Date(deck.getLastModified());		
 		lastModified.setText(new SimpleDateFormat(getResources().getString(R.string.labelDateFormat)).format(date));
-		fileNames.add(filename);
+		deckFilenames.add(filename);
 		viewListAdapter.add(view);
 	}
 	
 	private void deleteDeck() {		
-		String filename = fileNames.get(selectedDeck);
-		if (filename.equals(lastQuizDeck))
-			lastQuizDeck = null;
+		String filename = deckFilenames.get(selectedDeck);
+		if (filename.equals(lastQuizDeckFilename))
+			lastQuizDeckFilename = null;
 		selectedDeck = -1;
 		
 		logI("Trying to delete: " + filename);
@@ -75,9 +78,9 @@ public class ActNDFDeckChooser extends ActBase {
 	}
 	
 	private void editDeck() {
-		String filename = fileNames.get(selectedDeck);
+		String filename = deckFilenames.get(selectedDeck);
 		Bundle bundle = new Bundle();
-		bundle.putString(getResources().getString(R.string.tagDeckFilename), filename);		
+		bundle.putString(getResources().getString(R.string.tagNDFDeckFilename), filename);		
 		Intent intent = new Intent(this, ActNDFDeckEditor.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
@@ -111,20 +114,26 @@ public class ActNDFDeckChooser extends ActBase {
 			public void onClick(View v) {
 				showDialog(DIALOG_NEWDECK);
 			}
-		});			
+		});
+		
+		Button buttonQuiz = (Button) findViewById(R.id.ndfdeckchooserButtonQuiz);
+		buttonQuiz.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+				newQuiz();				
+			}
+		});
+		
+		Button buttonResume = (Button) findViewById(R.id.ndfdeckchooserButtonResume);
+		buttonResume.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				resumeQuiz();
+			}
+		});
 				
 		listView = (ListView) findViewById(R.id.ndfdeckchooserListView);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				listView.setSelection(pos);								
-				logI("onItemClicky. pos = " + pos + " name = " + fileNames.get(pos));
-				if (selectedView != null)
-					selectedView.setBackgroundColor(getResources().getColor(R.color.colorBlack));
-				selectedView = view;
-				view.setBackgroundColor(getResources().getColor(R.color.colorDeckSelected));
-				selectedDeck = pos;
-				updateButtonState();
-				persist();
+				selectDeck(pos);
 			}
 		});
 				
@@ -146,6 +155,22 @@ public class ActNDFDeckChooser extends ActBase {
 		});*/		
 	}    
 	
+	private void newQuiz() {
+		String deckFilename = deckFilenames.get(selectedDeck);
+		NDFDeck deck = NDFPersistent.load(deckFilename, ActNDFDeckChooser.this, NDFDeck.class);
+		NDFQuiz ndfQuiz = new NDFQuiz(deck, ActNDFDeckChooser.this);		
+		deck.setQuizFile(ndfQuiz.getFilename());
+		deck.persist(this);
+		lastQuizDeckFilename = deckFilename;
+		persist();
+		updateButtonState();
+		Bundle bundle = new Bundle();
+		bundle.putString(getResources().getString(R.string.tagNDFQuizFilename), ndfQuiz.getFilename());		
+		Intent intent = new Intent(this, ActNDFQuiz.class);
+		intent.putExtras(bundle);
+		startActivity(intent);
+	}
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ndfdeckchooser);        
@@ -165,10 +190,8 @@ public class ActNDFDeckChooser extends ActBase {
 		}
 	}
 	
-	public void populate() {
-		selectedDeck = -1;
-		selectedView = null;
-		fileNames = new ArrayList<String>();
+	public void populate() {				
+		deckFilenames = new ArrayList<String>();
 		viewListAdapter = new ViewListAdapter();		
 		File dir = getFilesDir();
 		String extension = getResources().getString(R.string.extDeckExtension);
@@ -178,18 +201,56 @@ public class ActNDFDeckChooser extends ActBase {
 		for (String filename : dirList)
 			if (filename.endsWith(extension))
 				addDeck(filename);
-		updateButtonState();
 		
 		listView.setAdapter(viewListAdapter);
+		
+		if (selectedDeck >= deckFilenames.size())
+			selectedDeck = -1;			
+		
+		updateButtonState();
+		
+		if (selectedDeck > -1)
+			selectDeck(selectedDeck);
 	}
 		
 	public void persist() {
-		
+		SharedPreferences sp = getSharedPreferences(getResources().getString(R.string.tagNDFDeckChooserPrefs), Context.MODE_PRIVATE);
+    	Editor editor = sp.edit();
+    	editor.putString(getResources().getString(R.string.tagNDFDeckChooserLastQuizDeck), lastQuizDeckFilename);
+    	editor.putInt(getResources().getString(R.string.tagNDFDeckChooserSelectedDeck), selectedDeck);    	
+    	editor.commit();
 	}
 	
-	public void restore() {
-		//Load state
+	public void restore() {		
+		SharedPreferences sp = getSharedPreferences(getResources().getString(R.string.tagNDFDeckChooserPrefs), Context.MODE_PRIVATE);    	
+    	lastQuizDeckFilename = sp.getString(getResources().getString(R.string.tagNDFDeckChooserLastQuizDeck), null);    	    
+    	selectedDeck = sp.getInt(getResources().getString(R.string.tagNDFDeckChooserSelectedDeck), -1);    
 		populate();
+	}
+	
+	public void resumeQuiz() {
+		NDFQuiz ndfQuiz = NDFPersistent.load(quizFilename, this, NDFQuiz.class);
+		if (ndfQuiz == null)
+			return;
+		lastQuizDeckFilename = ndfQuiz.getDeckFilename();
+		persist();
+		
+		Bundle bundle = new Bundle();
+		bundle.putString(getResources().getString(R.string.tagNDFQuizFilename), quizFilename);		
+		Intent intent = new Intent(this, ActNDFQuiz.class);
+		intent.putExtras(bundle);
+		startActivity(intent);
+	}
+	
+	private void selectDeck(int pos){
+		listView.setSelection(pos);												
+		if (selectedView != null)
+			selectedView.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+		selectedView = viewListAdapter.getView(pos, null, null);		
+		selectedView.setBackgroundColor(getResources().getColor(R.color.colorDeckSelected));
+		selectedDeck = pos;
+		updateButtonState();
+		persist();
 	}
 	
 	public void updateButtonState(){
@@ -197,11 +258,20 @@ public class ActNDFDeckChooser extends ActBase {
 		Button buttonDel = (Button) findViewById(R.id.ndfdeckchooserButtonDelete);
 		Button buttonEdit = (Button) findViewById(R.id.ndfdeckchooserButtonEdit);
 		Button buttonQuiz = (Button) findViewById(R.id.ndfdeckchooserButtonQuiz);
+				
+		String deckFilename = ((selectedDeck < 0) || (deckFilenames.size() < 1)) ? lastQuizDeckFilename : deckFilenames.get(selectedDeck);	
+		NDFDeck ndfDeck = null;
+		if (deckFilename != null)
+			ndfDeck = NDFPersistent.load(deckFilename, this, NDFDeck.class);		
 		
-		if ((selectedDeck < 0) && (lastQuizDeck == null))
-			buttonResume.setEnabled(false);
-		else
-			buttonResume.setEnabled(true);
+		quizFilename = null;
+		if (ndfDeck != null)
+			quizFilename = ndfDeck.getQuizFile();					
+		
+		buttonResume.setEnabled(false);		
+		if (quizFilename != null)
+			if (new File(getFilesDir(), quizFilename).exists())		
+				buttonResume.setEnabled(true);			
 		
 		if (selectedDeck < 0){
 			buttonDel.setEnabled(false);
@@ -257,6 +327,8 @@ public class ActNDFDeckChooser extends ActBase {
 			if ((name == null) || (name.trim().equalsIgnoreCase("")))
 				return;
 			new NDFDeck(name, desc, ActNDFDeckChooser.this);
+			selectedDeck = -1;
+			persist();
 			populate();						
 		}
 		
@@ -275,9 +347,8 @@ public class ActNDFDeckChooser extends ActBase {
 
 		private ArrayList<View> views = new ArrayList<View>();
 		
-		public void add(View view){
-			if (view != null)
-				views.add(view);
+		public void add(View view){								
+			views.add(view);					
 		}
 		
 		public int getCount() {
@@ -290,8 +361,8 @@ public class ActNDFDeckChooser extends ActBase {
 
 		public long getItemId(int position) {
 			return 0;
-		}
-
+		}	
+		
 		public View getView(int position, View convertView, ViewGroup parent) {
 			return views.get(position);
 		}		

@@ -124,19 +124,16 @@ public class ActNDFDeckEditor extends ActBase {
     	init();
     	
     	Bundle bundle = getIntent().getExtras();
-    	String key = getResources().getString(R.string.tagDeckFilename);
+    	String key = getResources().getString(R.string.tagNDFDeckFilename);
     	if ((bundle != null) && bundle.containsKey(key)){
     		currentCardNum = -1;
     		currentFaceNum = -1;
     		logI("Setting initial state from bundle.");
-    		populate(NDFPersistent.load(bundle.getString(key), this, NDFDeck.class), 0);    		
+    		populate(NDFPersistent.load(bundle.getString(key), this, NDFDeck.class));    		
     		getIntent().removeExtra(key);
     	}
     	else
-    		restore();
-    	
-    	if (deckFile == null)
-    		populate(new NDFDeck("blah", "blah", this));
+    		restore();    	    
     	
         logI("Born.");
     }       
@@ -166,7 +163,7 @@ public class ActNDFDeckEditor extends ActBase {
     protected void populate() {
     	populate(deck, currentCardNum);
     }
-    
+        
     public void populate(NDFDeck deck){    	
     	populate(deck, 0);    	
     }
@@ -522,7 +519,8 @@ public class ActNDFDeckEditor extends ActBase {
     			
     			setOnShowListener(new DialogInterface.OnShowListener() {					
 					public void onShow(DialogInterface dialog) {
-						actv.setText(deck.getCard(currentCardNum).getFace(currentFaceNum).getText());						
+						actv.setText(deck.getCard(currentCardNum).getFace(currentFaceNum).getText());
+						actv.selectAll();
 					}
 				});
     			

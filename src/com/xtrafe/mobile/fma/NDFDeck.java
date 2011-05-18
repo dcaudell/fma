@@ -14,8 +14,7 @@ import android.content.Context;
 
 public class NDFDeck
 	extends NDFPersistent	
-{	
-	private static final long serialVersionUID = -7606489484835531452L;
+{		
 	private List<NDFCard> cards;
 	private String name;
 	private String desc;
@@ -95,8 +94,7 @@ public class NDFDeck
 	
 	public class NDFCard 
 		implements Serializable
-	{		
-		private static final long serialVersionUID = -2103660881266177498L;
+	{				
 		private List<NDFCardFace> faces;		
 		private NDFCard() {		
 			faces = new ArrayList<NDFCardFace>();

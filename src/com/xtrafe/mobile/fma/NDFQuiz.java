@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 
 import android.content.Context;
 
 import com.xtrafe.mobile.fma.NDFDeck.NDFCard;
+import com.xtrafe.mobile.fma.NDFDeck.NDFCard.NDFCardFace;
 
 public class NDFQuiz
 	extends NDFPersistent
@@ -17,6 +19,7 @@ public class NDFQuiz
 	private int incorrect;
 	private int total;
 	private String filename;
+	private long lastModified;
 	
 	private NDFDeck deck;
 	private LinkedList<NDFQuestion> questions = new LinkedList<NDFQuestion>();
@@ -32,22 +35,38 @@ public class NDFQuiz
 				total++;
 			}
 		}		
-		Collections.shuffle(questions);
+		Collections.shuffle(questions, new Random());
 		resolveFilename(context);
+		lastModified = System.currentTimeMillis();
 		persist(context);
 	}
 	
-	public double currentScore() {
-		return correct / total;
-	}
+	public int correct() {
+		return correct;
+	}	
 	
-	public NDFQuestion next() {
+	public NDFQuestion current() {
 		return questions.peek();
 	}
 	
 	public String getFilename() {
 		return filename;
-	}	
+	}
+	
+	public String getDeckFilename() {
+		return deck.getFilename();
+	}
+	
+	public String getDeckListing() {
+		StringBuffer buff = new StringBuffer();
+		for (NDFQuestion question : questions)
+			buff.append(question.getId() +  "\n");
+		return buff.toString();
+	}
+	
+	public int incorrect() {
+		return incorrect;
+	}
 	
 	public void reset() {
 		questions.addAll(done);
@@ -62,9 +81,17 @@ public class NDFQuiz
 		filename = deck.getFilename() + extension;					
 	}
 	
-	public int size() {
+	public int remaining() {
 		return questions.size();
 	}
+	
+	public double score() {
+		return ((double) correct / (double) total) * 100.0 ;
+	}
+	
+	public int total() {
+		return questions.size() + done.size();
+	}	
 	
 	public class NDFQuestion
 		implements Serializable {
@@ -86,13 +113,18 @@ public class NDFQuiz
 			done.add(this);
 		}
 		
-		public NDFCard getCard() {
+		private NDFCard getCard() {
 			return deck.getCard(cardNum);
 		}
 		
-		public int getFace() {
-			return faceNum;
+		public String getId() {
+			return deck.getFilename() + " Card: " + cardNum + " Face: " + faceNum;
 		}
+		
+		public NDFCardFace getFace(int nFlips) {
+			int flipFaceNum = (nFlips + faceNum) % deck.getCard(cardNum).size();			
+			return getCard().getFace(flipFaceNum);
+		}			
 		
 		public void incorrect() {
 			questions.remove(this);			
@@ -105,6 +137,10 @@ public class NDFQuiz
 			seenBefore = true;				
 		}
 		
+		public int size() {
+			return getCard().size();
+		}
+		
 		public void kinda() {
 			questions.remove(this);
 			questions.add(this);
@@ -114,6 +150,7 @@ public class NDFQuiz
 		}
 		
 		public void persist(Context context) {
+			lastModified = System.currentTimeMillis();
 			NDFQuiz.this.persist(context);
 		}			
 	}

@@ -57,7 +57,7 @@ public class ActLogButton extends ActBase {
         setContentView(R.layout.logbutton_new);
         
         if (firstInstance){
-    		clearLogs();
+    		//clearLogs();
     		firstInstance = false;
     	}    	
     	new CollectLogTask().execute(new ArrayList<String>());  
