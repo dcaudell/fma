@@ -43,7 +43,7 @@
         <xs:restriction base="xs:decimal"/>    
     </xs:simpleType>
     <xs:simpleType name="pe">
-        <xs:restriction base="xs:string"/>    
+        <xs:restriction base="xs:decimal"/>    
     </xs:simpleType>
     <xs:simpleType name="name">
         <xs:restriction base="xs:string"/>    

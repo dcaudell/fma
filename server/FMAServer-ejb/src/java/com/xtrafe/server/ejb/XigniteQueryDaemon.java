@@ -13,12 +13,12 @@ import javax.ejb.Singleton;
 public class XigniteQueryDaemon extends BaseQueryDaemon {        
     
     private XigniteRealTime xigniteRealTime;
-    private XigniteRealTimeSoap xigniteRealTimeSoap;
-            
+    private XigniteRealTimeSoap xigniteRealTimeSoap;           
+    
     @PostConstruct
-    void postConstruct() {        
+    void postConstruct() {                
         xigniteRealTime = new XigniteRealTime();        
-        xigniteRealTimeSoap = xigniteRealTime.getXigniteRealTimeSoap12();        
+        xigniteRealTimeSoap = xigniteRealTime.getXigniteRealTimeSoap12();                         
     }
             
     protected void doQuery() {

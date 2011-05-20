@@ -24,9 +24,13 @@
         	android:name="ActEvora"/>
         <activity 
         	android:name="ActLogButton"/>
-        <activity 
-        	android:name="ActNDFDeckEditor"/>
 		<activity 
         	android:name="ActNDFDeckChooser"/>
+        <activity 
+        	android:name="ActNDFDeckEditor"/>
+		<activity
+			android:name="ActNDFQuiz"/>
+		<activity
+			android:name="ActOpenGL"/>     			
     </application>
 </manifest>

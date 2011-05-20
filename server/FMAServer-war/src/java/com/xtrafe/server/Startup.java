@@ -19,8 +19,11 @@ public class Startup implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         if (webserviceXQueryDaemon == null)
             Log.out("Injection failed for webserviceXQueryDaemon");
-        else
+        else {
+            webserviceXQueryDaemon.test();
             webserviceXQueryDaemon.start();
+        }
+            
     }
 
     @Override
