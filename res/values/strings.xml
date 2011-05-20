@@ -4,6 +4,7 @@
     <string name="demoActLogButton">Logging</string>
     <string name="demoActNDFDeckEditor">Flashcard Editor</string>
     <string name="demoActNDFDeckChooser">Flashcards</string>
+    <string name="demoActOpenGL">OpenGL</string>
     <string name="extBackupExtension">.bak</string>
     <string name="extDeckExtension">.deck</string>
     <string name="extQuizExtension">.quiz</string>        

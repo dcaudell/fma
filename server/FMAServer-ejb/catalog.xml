@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://www.xignite.com/xRealTime.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/xRealTime/wsdl/www.xignite.com/xRealTime.asmx.wsdl"/>
+    <system systemId="http://www.webservicex.net/stockquote.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/stockquote/wsdl/www.webservicex.net/stockquote.asmx.wsdl"/>
+    <system systemId="file:/D:/Dev/Projects/eclipseWin/fma/server/FMAServer-ejb/src/java/com/xtrafe/server/ejb/webservicex/StockQuote.xsd" uri="src/conf/xml-resources/jaxb/WebserviceXStockQuotes/StockQuote.xsd"/>
+</catalog>
