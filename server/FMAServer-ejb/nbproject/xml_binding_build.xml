@@ -14,7 +14,7 @@
         <mkdir dir="${build.generated.sources.dir}/jaxb" xmlns:s="http://xml.netbeans.org/schema/JAXBWizConfig"/>
         <mkdir dir="build/generated/jaxbCache" xmlns:s="http://xml.netbeans.org/schema/JAXBWizConfig"/>
         <mkdir dir="build/generated/jaxbCache/WebserviceXStockQuotes"/>
-        <xjc package="com.xtrafe.server.ejb.webservicex" destdir="build/generated/jaxbCache/WebserviceXStockQuotes" catalog="catalog.xml">
+        <xjc package="com.xtrafe.server.ejb.wsxjax" destdir="build/generated/jaxbCache/WebserviceXStockQuotes" catalog="catalog.xml">
             <classpath>
                 <pathelement location="${src.dir}"/>
                 <pathelement path="${jaxbwiz.xjcrun.classpath}"/>

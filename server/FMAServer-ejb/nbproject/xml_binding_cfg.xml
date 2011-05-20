@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='FMAServer-ejb' version='1.0'>
-	<schema type='-xmlschema' package='com.xtrafe.server.ejb.webservicex' name='WebserviceXStockQuotes'>
+	<schema type='-xmlschema' package='com.xtrafe.server.ejb.wsxjax' name='WebserviceXStockQuotes'>
 		<xjc-options>
 		</xjc-options>
 		<schema-sources>
