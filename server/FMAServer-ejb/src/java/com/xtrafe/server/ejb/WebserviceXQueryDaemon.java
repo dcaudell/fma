@@ -1,6 +1,7 @@
 package com.xtrafe.server.ejb;
 
 import com.xtrafe.server.ejb.entity.StockEntity;
+import com.xtrafe.server.ejb.entity.SymbolEntity;
 import com.xtrafe.server.ejb.entity.TickDayEntity;
 import com.xtrafe.server.ejb.entity.TickEntity;
 import com.xtrafe.server.ejb.webservicex.StockQuote;
@@ -33,15 +34,18 @@ import javax.xml.bind.Unmarshaller;
 @Singleton
 public class WebserviceXQueryDaemon extends BaseQueryDaemon {
 
-    /*
+    private static final String unitName = "StockService";
+            
+    /* This stuff appears to not like being run in a another thread.
     @PersistenceContext(unitName="StockService")
     private EntityManager em;    
     
     //Finnicky... does not like to inject this. Problem with multithreading??
     private EntityManagerFactory emf;
+    */
     
-    //@Resource
-    //UserTransaction trans;*/
+    @Resource
+    UserTransaction trans;
     
     StockQuote stockQuote;
     StockQuoteSoap stockQuoteSoap;
@@ -65,10 +69,24 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
     public void test() {
         Log.out("Here we go.");        
     }
-
+    
     @Override
     protected void doQuery() {
-        String quote = stockQuoteSoap.getQuote("GOOG");
+        EntityManager em = Persistence.createEntityManagerFactory(unitName).createEntityManager();
+        TypedQuery<SymbolEntity> findSymbols = em.createNamedQuery("SymbolEntity.findAll", SymbolEntity.class);
+        List<SymbolEntity> symbols = findSymbols.getResultList();        
+        
+        for (SymbolEntity symbol : symbols)
+            try {
+                doQuery(symbol.getSymbol());
+            }
+            catch(Exception e) {
+                Log.out("Query failed for symbol: " + symbol.getSymbol());
+        }
+    }
+    
+    private void doQuery(String symbol) {
+        String quote = stockQuoteSoap.getQuote(symbol);
         StringReader stringReader = new StringReader(quote);        
         Stock stock = null;
         
@@ -77,7 +95,7 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
             stock = stockQuotes.getStock().get(0);            
         }
         catch (JAXBException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return;
         }                
 
@@ -86,9 +104,9 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
             return;
         }
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockService");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(unitName);
         EntityManager em = emf.createEntityManager();
-        EntityTransaction trans = em.getTransaction();
+        //EntityTransaction trans = em.getTransaction();
         try {                                    
             trans.begin();
             TypedQuery<StockEntity> findStockQuery = em.createNamedQuery("StockEntity.findBySymbol", StockEntity.class);
@@ -138,7 +156,8 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
         }
         finally {
             try {
-                if (trans.isActive())
+                //if (trans.isActive())
+                if (trans.getStatus() == Status.STATUS_ACTIVE)
                     trans.rollback();
             }
             catch (Throwable t){

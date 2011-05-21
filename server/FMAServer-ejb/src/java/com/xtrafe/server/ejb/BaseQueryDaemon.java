@@ -2,7 +2,7 @@ package com.xtrafe.server.ejb;
 
 public abstract class BaseQueryDaemon {        
     
-    private int sleepSeconds = 20;    
+    private int sleepSeconds = 60;    
     private boolean running;    
     
     protected abstract void doQuery();

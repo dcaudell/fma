@@ -55,10 +55,13 @@ public class TickDayEntity implements Serializable {
     
     public void sync(Stock stock, StockEntity stockEntity){
         this.annRange = stock.getAnnRange();
-        this.earns = stock.getEarns().doubleValue();
+        if (stock.getEarns() != null)
+            this.earns = stock.getEarns().doubleValue();
         this.mktCap = stock.getMktCap();
-        this.peRatio = stock.getPE().doubleValue();
-        this.previousClose = stock.getPreviousClose().doubleValue();
+        if (stock.getPE() != null)
+            this.peRatio = stock.getPE().doubleValue();
+        if (stock.getPreviousClose() != null)
+            this.previousClose = stock.getPreviousClose().doubleValue();
         this.tickDayDate = dateFromDateString(stock.getDate());
         setStockEntity(stockEntity);
     }    

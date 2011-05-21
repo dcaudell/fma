@@ -60,10 +60,14 @@ public class TickEntity implements Serializable {
     }
     
     public void sync(Stock stock, TickDayEntity tickDayEntity){
-        this.change = stock.getChange().doubleValue();
-        this.high = stock.getHigh().doubleValue();
-        this.low = stock.getLow().doubleValue();
-        this.previous = stock.getLast().doubleValue();
+        if (stock.getChange() != null)
+            this.change = stock.getChange().doubleValue();
+        if (stock.getHigh() != null)
+            this.high = stock.getHigh().doubleValue();
+        if (stock.getLow() != null)
+            this.low = stock.getLow().doubleValue();
+        if (stock.getLast() != null)
+            this.previous = stock.getLast().doubleValue();        
         this.percentageChange = stock.getPercentageChange();
         this.tickTime = timeFromTimeString(stock.getTime());        
         this.volume = stock.getVolume();

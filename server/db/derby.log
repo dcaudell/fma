@@ -1,2 +1,9 @@
-2011-05-20 21:38:54.156 GMT : Could not listen on port 1527 on host localhost:
- java.net.BindException: Address already in use: JVM_Bind
+2011-05-21 01:37:00.390 GMT : Apache Derby Network Server - 10.6.2.1 - (999685) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+2011-05-21 01:37:17.171 GMT:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.2.1 - (999685): instance a816c00e-0130-1032-c379-ffffa99f7b43 
+on database directory D:\Dev\Projects\eclipseWin\fma\server\db\FullMobileDatabase  with class loader sun.misc.Launcher$AppClassLoader@11b86e7 
+Loaded from file:/E:/Program%20Files/Sun/JavaDB/lib/derby.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_25-b06
+Database Class Loader started - derby.database.classpath=''
