@@ -15,28 +15,26 @@ import javax.servlet.ServletContextListener;
 
 @Stateless
 public class Startup implements ServletContextListener {   
+    private static final boolean getTicks = false;
+    private static final boolean doSetup = false;
+    
     @EJB
     WebserviceXQueryDaemon webserviceXQueryDaemon;
     
     @EJB
-    Setup setup;
+    Setup setup;        
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        setup.doSetup();
+        if (doSetup)
+            setup.doSetup();
         
-        if (webserviceXQueryDaemon == null)
-            Log.out("Injection failed for webserviceXQueryDaemon");
-        else {
-            webserviceXQueryDaemon.test();
-            webserviceXQueryDaemon.start();
-        }
-            
+        if (getTicks)
+            webserviceXQueryDaemon.start();                
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        if (webserviceXQueryDaemon != null)
-            webserviceXQueryDaemon.stop();
+    public void contextDestroyed(ServletContextEvent sce) {        
+        webserviceXQueryDaemon.stop();
     }    
 }

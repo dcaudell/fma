@@ -2,14 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.xtrafe.mobile.fma"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.0">	
 	<uses-permission 
-		android:name="android.permission.READ_LOGS" />
+		android:name="android.permission.READ_LOGS"/>
+	<uses-permission
+		android:name="android.permission.INTERNET"/>
+	<uses-sdk 
+		android:targetSdkVersion="8"/>			
 
     <application 
     	android:icon="@drawable/icon" 
     	android:label="@string/titleAppName" 
-    	android:testOnly="false">    	
+    	android:testOnly="false">    	    
         <activity 
         	android:name="ActMain"
 			android:label="@string/titleAppName">
@@ -31,6 +35,8 @@
 		<activity
 			android:name="ActNDFQuiz"/>
 		<activity
-			android:name="ActOpenGL"/>     			
+			android:name="ActOpenGL"/>
+		<activity
+			android:name="ActTSStockChooser"/>     			
     </application>
 </manifest>

@@ -2,7 +2,6 @@ package com.xtrafe.server.ejb.entity;
 
 import com.xtrafe.server.ejb.wsxjax.Stock;
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.persistence.Entity;
@@ -10,13 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@NamedQuery(name="TickDayEntity.findTickDayForStock", 
-            query="SELECT e FROM TickDayEntity e WHERE e.tickDayDate = :date AND e.stockEntity = :stockEntity")
+@NamedQueries({
+    @NamedQuery(name="TickDayEntity.findTickDayForStock", 
+                query="SELECT e FROM TickDayEntity e WHERE e.tickDayDate = :date AND e.stockEntity = :stockEntity"),
+    @NamedQuery(name="TickDayEntity.findAllDaysForStock", 
+                query="SELECT e FROM TickDayEntity e WHERE e.stockEntity = :stockEntity ORDER BY e.tickDayDate DESC")
+})
 @Entity
 public class TickDayEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,6 +34,8 @@ public class TickDayEntity implements Serializable {
     private Long id;
     
     private String mktCap;
+    
+    private double dayOpen;
     
     private double peRatio;
     
@@ -46,10 +52,12 @@ public class TickDayEntity implements Serializable {
     
     public static Calendar dateFromDateString(String dateString){        
         String[] dateParts = dateString.split("/");
+        if (dateParts.length < 3)
+            return null;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Integer.valueOf(dateParts[2]) - 1, 
-                     Integer.valueOf(dateParts[1]),
-                     Integer.valueOf(dateParts[0]));
+        calendar.set(Integer.valueOf(dateParts[2]), 
+                     Integer.valueOf(dateParts[0]) - 1,
+                     Integer.valueOf(dateParts[1]));
         return calendar;
     }
     
@@ -62,6 +70,8 @@ public class TickDayEntity implements Serializable {
             this.peRatio = stock.getPE().doubleValue();
         if (stock.getPreviousClose() != null)
             this.previousClose = stock.getPreviousClose().doubleValue();
+        if (stock.getOpen() != null)
+            this.dayOpen = stock.getOpen().doubleValue();
         this.tickDayDate = dateFromDateString(stock.getDate());
         setStockEntity(stockEntity);
     }    
@@ -96,6 +106,14 @@ public class TickDayEntity implements Serializable {
 
     public void setMktCap(String mktCap) {
         this.mktCap = mktCap;
+    }
+    
+    public double getDayOpen() {
+        return dayOpen;
+    }
+    
+    public void setDayOpen(double dayOpen){
+        this.dayOpen = dayOpen;
     }
 
     public double getPeRatio() {

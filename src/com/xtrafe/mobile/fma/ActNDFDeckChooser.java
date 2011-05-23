@@ -18,14 +18,11 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -341,30 +338,5 @@ public class ActNDFDeckChooser extends ActBase {
             getWindow().setAttributes((android.view.WindowManager.LayoutParams) params); 
 	    	init();	    		       
 		}					
-	}
-	
-	private class ViewListAdapter extends BaseAdapter implements ListAdapter {
-
-		private ArrayList<View> views = new ArrayList<View>();
-		
-		public void add(View view){								
-			views.add(view);					
-		}
-		
-		public int getCount() {
-			return views.size();
-		}
-
-		public Object getItem(int position) {
-			return null;
-		}
-
-		public long getItemId(int position) {
-			return 0;
-		}	
-		
-		public View getView(int position, View convertView, ViewGroup parent) {
-			return views.get(position);
-		}		
-	}
+	}	
 }

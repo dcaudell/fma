@@ -34,15 +34,7 @@ import javax.xml.bind.Unmarshaller;
 @Singleton
 public class WebserviceXQueryDaemon extends BaseQueryDaemon {
 
-    private static final String unitName = "StockService";
-            
-    /* This stuff appears to not like being run in a another thread.
-    @PersistenceContext(unitName="StockService")
-    private EntityManager em;    
-    
-    //Finnicky... does not like to inject this. Problem with multithreading??
-    private EntityManagerFactory emf;
-    */
+    private static final String unitName = "StockService";                
     
     @Resource
     UserTransaction trans;
@@ -78,6 +70,8 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
         
         for (SymbolEntity symbol : symbols)
             try {
+                if (!isRunning())
+                    return;
                 doQuery(symbol.getSymbol());
             }
             catch(Exception e) {
@@ -117,11 +111,11 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
             if (stockEntities.size() > 0)
                 stockEntity = stockEntities.get(0);
             else {                                
-                stockEntity = new StockEntity();
-                stockEntity.sync(stock);
-                em.persist(stockEntity);
+                stockEntity = new StockEntity();                
                 Log.out("Created new stock symbol: " + stock.getSymbol());
             }                
+            stockEntity.sync(stock);
+            em.persist(stockEntity);
             
             TypedQuery<TickDayEntity> findTickDayQuery = em.createNamedQuery("TickDayEntity.findTickDayForStock", TickDayEntity.class);
             findTickDayQuery.setParameter("stockEntity", stockEntity);

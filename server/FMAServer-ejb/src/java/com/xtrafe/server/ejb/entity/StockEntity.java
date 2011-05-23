@@ -7,11 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-@NamedQuery(name="StockEntity.findBySymbol",
-            query="SELECT e FROM StockEntity e WHERE e.symbol = :symbol")
+@NamedQueries({
+    @NamedQuery(name="StockEntity.findAll",
+                query="SELECT e FROM StockEntity e"),
+    @NamedQuery(name="StockEntity.findBySymbol",
+                query="SELECT e FROM StockEntity e WHERE e.symbol = :symbol")
+})
 @Entity
 public class StockEntity implements Serializable {
     private static final long serialVersionUID = 1L;        
@@ -22,6 +27,10 @@ public class StockEntity implements Serializable {
     
     private String name;
     
+    private double previous;
+    
+    private String percentageChange;
+    
     private String symbol;
     
     @OneToMany (mappedBy = "stockEntity")
@@ -30,6 +39,9 @@ public class StockEntity implements Serializable {
     public void sync(Stock stock){        
         this.name = stock.getName();
         this.symbol = stock.getSymbol();
+        this.percentageChange = stock.getPercentageChange();
+        if (stock.getLast() != null)
+            this.previous = stock.getLast().doubleValue();
     }
 
     public Long getId() {
@@ -46,6 +58,22 @@ public class StockEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getPercentageChange() {
+        return percentageChange;
+    }
+    
+    public void setPercentageChange(String percentChange){
+        this.percentageChange = percentChange;
+    }
+    
+    public double getPrevious() {
+        return previous;
+    }
+    
+    public void setPrevious(double price) {
+        this.previous = price;
     }
 
     public String getSymbol() {

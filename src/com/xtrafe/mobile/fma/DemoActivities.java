@@ -4,5 +4,6 @@ public enum DemoActivities {
 	ActEvora, 
 	ActLogButton,	
 	ActNDFDeckChooser,
+	ActTSStockChooser,
 	ActOpenGL
 }

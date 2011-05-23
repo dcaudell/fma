@@ -67,7 +67,7 @@ public class ActLogButton extends ActBase {
     }		
 	
 	//This code somewhat boosted from http://code.google.com/p/android-log-collector/source/browse/trunk/android-log-collector/src/com/xtralogic/android/logcollector/SendLogActivity.java
-	public class CollectLogTask extends AsyncTask<List<String>, String, StringBuilder>{	
+	public class CollectLogTask extends AsyncTask<List<String>, String, Object>{	
 		
 		@Override
 		protected StringBuilder doInBackground(List<String>... params) {			
@@ -97,7 +97,7 @@ public class ActLogButton extends ActBase {
                 e.printStackTrace();
             } 
 
-            return new StringBuilder();			
+            return null;			
 		}
 		
 		protected void onProgressUpdate(String... messages){			

@@ -12,12 +12,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@NamedQuery(name="TickEntity.findTickForTime", 
-            query="SELECT e FROM TickEntity e WHERE e.tickTime = :time AND e.tickDayEntity = :tickDayEntity")
+@NamedQueries({
+    @NamedQuery(name="TickEntity.findTickForTime", 
+                query="SELECT e FROM TickEntity e WHERE e.tickTime = :time AND e.tickDayEntity = :tickDayEntity"),
+    @NamedQuery(name="TickEntity.findAllTicksForDay",
+                query="SELECT e FROM TickEntity e WHERE e.tickDayEntity = :tickDayEntity ORDER BY e.tickTime DESC")    
+})
 @Entity
 public class TickEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -47,10 +52,13 @@ public class TickEntity implements Serializable {
     public static Calendar timeFromTimeString(String timeString){
         Calendar calendar = Calendar.getInstance();
         String parts[] = timeString.split(":");
+        if (parts.length < 2)
+            return null;
+        
         int hour = Integer.valueOf(parts[0]);                
         int min = Integer.valueOf(parts[1].substring(0,2));        
         if (parts[1].toLowerCase().contains("pm"))
-            hour += 12;
+            hour = (hour == 12) ? hour : hour + 12;
         calendar.clear();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, min);

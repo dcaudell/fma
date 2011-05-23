@@ -7,6 +7,10 @@ public abstract class BaseQueryDaemon {
     
     protected abstract void doQuery();
     
+    public boolean isRunning() {
+        return running;
+    }
+    
     public void setSleepSeconds(int sleepSeconds) {
         this.sleepSeconds = sleepSeconds;
     }

@@ -1,0 +1,23 @@
+<StockQuotes    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:///D:/Dev/Projects/eclipseWin/fma/server/FMAServer-ejb/src/java/com/xtrafe/server/ejb/webservicex/StockQuote.xsd"
+>
+    <Stock>
+        <Symbol>GOOG</Symbol>
+        <Last>531.25</Last>
+        <Date>5/19/2011</Date>
+        <Time>4:00pm</Time>
+        <Change>+1.44</Change>
+        <Open>532.98</Open>
+        <High>536.54</High>
+        <Low>529.72</Low>
+        <Volume>2466968</Volume>
+        <MktCap>171.2B</MktCap>
+        <PreviousClose>529.81</PreviousClose>
+        <PercentageChange>+0.27%</PercentageChange>
+        <AnnRange>433.63 - 642.96</AnnRange>
+        <Earns>25.75</Earns>
+        <P-E>20.58</P-E>
+        <Name>Google Inc.</Name>        
+    </Stock>
+</StockQuotes>

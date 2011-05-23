@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>    
-    <dimen name="fontscaleMenuItemSize">14pt</dimen>
-	<dimen name="fontscaleCardText">8pt</dimen>
+	<dimen name="fontscaleCardText">12pt</dimen>
 	<integer name="fontscaleCardTextDirect">10</integer>
-	<integer name="fontscaleCardTextIncrement">2</integer>
+	<integer name="fontscaleCardTextIncrement">5</integer>
+	<dimen name="fontscaleHeader">10pt</dimen>
+	<dimen name="fontscaleMenuItemSize">14pt</dimen>
     <dimen name="heightCardButton">48dp</dimen>    
     <dimen name="heightFaceButton">48dp</dimen>
     <dimen name="heightShrinkGrowButton">60dp</dimen>    
