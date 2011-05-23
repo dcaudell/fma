@@ -33,5 +33,12 @@
         	android:src="@drawable/icon_search" 
         	android:paddingTop="0dp" 
         	android:paddingBottom="4dp"/>
+		<ImageButton 
+        	android:id="@+id/tsstockchooserButtonRefresh" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="wrap_content" 
+        	android:src="@drawable/icon_refresh" 
+        	android:paddingTop="0dp" 
+        	android:paddingBottom="4dp"/>
     </LinearLayout>
 </LinearLayout>

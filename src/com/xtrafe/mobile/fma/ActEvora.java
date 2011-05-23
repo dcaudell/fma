@@ -1,5 +1,7 @@
 package com.xtrafe.mobile.fma;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Surface;
@@ -15,6 +17,10 @@ public class ActEvora
 		SHORT
 	}
 	private EvoraStates evoraState;	
+	
+	public ActEvora() {
+		logI("Constructor");
+	}
 	
 	private void changeState() {		
 		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
@@ -65,6 +71,14 @@ public class ActEvora
 		});
     }
 	
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);
+		logI("onConfigurationChanged");
+		setContentView(R.layout.evora);
+		evoraState = EvoraStates.NORMAL;
+		init();
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,5 +86,11 @@ public class ActEvora
         evoraState = EvoraStates.NORMAL;
         init();
         logI("Born.");
+        Intent myIntent = getIntent();        
+        if (myIntent.getCategories() != null){
+	        for (String category : myIntent.getCategories())
+	        	logI(category);
+        }
+        logI("Action = " + myIntent.getAction());
     }	
 }

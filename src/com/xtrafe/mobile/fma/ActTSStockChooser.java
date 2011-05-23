@@ -17,16 +17,16 @@ import com.xtrafe.fma.shared.SharedStockList;
 import com.xtrafe.fma.shared.SharedStrings;
 import com.xtrafe.fma.shared.SharedSymbolFilterType;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -80,6 +80,7 @@ public class ActTSStockChooser
 		listView = (ListView) findViewById(R.id.tsstockchooserListView);		
 		seekBar = (SeekBar) findViewById(R.id.tsstockchooserSeekBar);
 		final ImageButton filterButton = (ImageButton) findViewById(R.id.tsstockchooserButtonFilter);
+		final ImageButton refreshButton = (ImageButton) findViewById(R.id.tsstockchooserButtonRefresh);
 		final EditText filterText = (EditText) findViewById(R.id.tsstockchooserFilter);
 		
 		filterText.setOnClickListener(new View.OnClickListener() {			
@@ -136,11 +137,25 @@ public class ActTSStockChooser
 				doFilter();
 			}
 		});
+		
+		refreshButton.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+				sharedStocks = null;
+				populate();
+			}
+		});
 	}
 	
 	private void populate() {
 		new PopulateTask().execute();
 		persist();
+	}
+	
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);		
+		setContentView(R.layout.tsstockchooser);
+		init();
+		populate();
 	}
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -318,11 +333,12 @@ public class ActTSStockChooser
 		
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 			setContentView(R.layout.tsstockdetail);
 			LayoutParams params = getWindow().getAttributes(); 
             params.height = LayoutParams.FILL_PARENT;
             params.width = LayoutParams.FILL_PARENT;
-            getWindow().setAttributes((android.view.WindowManager.LayoutParams) params); 
+            getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);             
 			init();
 		}
 		
@@ -347,7 +363,8 @@ public class ActTSStockChooser
 			}
 			
 			public void post() {
-				//setTitle(stock.getName());
+				
+				//setTitle(stock.getName());				
 				textCompanyName.setText(stock.getName());
 				textSymbol.setText(stock.getSymbol());
 				Calendar calendar = stock.getTickDayDate();				

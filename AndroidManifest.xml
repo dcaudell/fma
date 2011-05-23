@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity 
-        	android:name="ActEvora"/>
+        	android:name="ActEvora"
+        	android:configChanges="keyboardHidden|orientation"/>
         <activity 
         	android:name="ActLogButton"/>
 		<activity 
@@ -37,6 +38,7 @@
 		<activity
 			android:name="ActOpenGL"/>
 		<activity
-			android:name="ActTSStockChooser"/>     			
+			android:name="ActTSStockChooser"
+			android:configChanges="keyboardHidden|orientation"/>     			
     </application>
 </manifest>
