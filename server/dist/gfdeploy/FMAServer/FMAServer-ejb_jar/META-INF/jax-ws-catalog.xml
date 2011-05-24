@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://www.xignite.com/xRealTime.asmx?WSDL" uri="wsdl/www.xignite.com/xRealTime.asmx.wsdl"/>
     <system systemId="http://www.webservicex.net/stockquote.asmx?WSDL" uri="wsdl/www.webservicex.net/stockquote.asmx.wsdl"/>
+    <system systemId="http://developer.ebay.com/webservices/latest/ShoppingService.wsdl" uri="wsdl/developer.ebay.com/webservices/latest/ShoppingService.wsdl"/>
+    <system systemId="file:/E:/Documents%20and%20Settings/dcaudell/Desktop/In%20Progress/ShoppingService.wsdl" uri="wsdl/ShoppingService.wsdl"/>
 </catalog>

@@ -20,6 +20,10 @@
         <servlet-name>StopTickDaemon</servlet-name>
         <servlet-class>com.xtrafe.fma.server.servlets.StopTickDaemon</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EbayQuery</servlet-name>
+        <servlet-class>com.xtrafe.fma.server.servlets.EbayQuery</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SymbolListing</servlet-name>
         <url-pattern>/SymbolListing</url-pattern>
@@ -35,6 +39,10 @@
     <servlet-mapping>
         <servlet-name>StopTickDaemon</servlet-name>
         <url-pattern>/StopTickDaemon</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EbayQuery</servlet-name>
+        <url-pattern>/EbayQuery</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

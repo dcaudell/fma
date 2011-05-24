@@ -35,12 +35,10 @@ public class StockListing extends HttpServlet {
             Object returnObject;
             
             String symbol = request.getParameter(SharedStrings.parmSymbol);
-            if (symbol == null){
-                returnObject = daoForStocks.getAllStocks();
-            }
-            else {
-                returnObject = daoForStocks.getStock(symbol);
-            }
+            if (symbol == null)
+                returnObject = daoForStocks.getAllStocks();            
+            else
+                returnObject = daoForStocks.getStock(symbol);            
                                     
             Gson gson = new Gson();            
             String jsonstring = gson.toJson(returnObject);
