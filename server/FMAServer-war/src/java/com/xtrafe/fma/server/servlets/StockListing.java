@@ -5,8 +5,10 @@
 package com.xtrafe.fma.server.servlets;
 
 import com.google.gson.Gson;
+import com.xtrafe.fma.shared.SharedStockList;
 import com.xtrafe.fma.shared.SharedStrings;
 import com.xtrafe.server.ejb.DAOForStocks;
+import com.xtrafe.server.log.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -34,9 +36,10 @@ public class StockListing extends HttpServlet {
         try {
             Object returnObject;
             
+            long start = System.currentTimeMillis();
             String symbol = request.getParameter(SharedStrings.parmSymbol);
             if (symbol == null)
-                returnObject = daoForStocks.getAllStocks();            
+                returnObject = daoForStocks.getAllStocks();
             else
                 returnObject = daoForStocks.getStock(symbol);            
                                     
@@ -44,6 +47,10 @@ public class StockListing extends HttpServlet {
             String jsonstring = gson.toJson(returnObject);
             out.print(jsonstring);
             out.flush();
+            if (returnObject instanceof SharedStockList) {
+                long end = System.currentTimeMillis() - start;
+                Log.out("Returned " + ((SharedStockList) returnObject).size() + " elements in " + end + "ms");
+            }
         } finally {            
             out.close();
         }

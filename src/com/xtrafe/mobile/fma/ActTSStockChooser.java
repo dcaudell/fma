@@ -301,6 +301,23 @@ public class ActTSStockChooser
 			super(context);			
 		}
 		
+		private void clear() {
+			textCompanyName.setText("");
+			textSymbol.setText("");
+			textTime.setText("");
+			textPreviousClose.setText("");
+			textDayOpen.setText("");
+			textCurrent.setText("");
+			textPercentageChange.setText("");
+			textHigh.setText("");
+			textLow.setText("");
+			textVolume.setText("");
+			textAnnualRange.setText("");
+			textPERatio.setText("");
+			textEarns.setText("");
+			textMarketCap.setText("");
+		}
+		
 		private void init() {
 			textCompanyName = (TextView) findViewById(R.id.tsstockdetailCompanyName);
 			textSymbol = (TextView) findViewById(R.id.tsstockdetailSymbol);
@@ -326,6 +343,7 @@ public class ActTSStockChooser
 			
 			this.setOnShowListener(new DialogInterface.OnShowListener() {				
 				public void onShow(DialogInterface dialog) {
+					clear();
 					populate();
 				}
 			});

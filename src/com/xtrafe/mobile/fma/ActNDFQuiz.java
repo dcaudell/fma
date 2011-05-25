@@ -135,11 +135,16 @@ public class ActNDFQuiz
 		this.currentFaceNum = currentFaceNum;
 		this.ndfQuizFilename = ndfQuiz.getFilename();			
 		
+		if (ndfQuiz.remaining() < 1){
+			finish();
+			return;
+		}
+		
 		TextView quizText = (TextView) findViewById(R.id.ndfquizText);
 		TextView remainingText = (TextView) findViewById(R.id.ndfquizLabelRemaining);
 		
-		remainingText.setText(getResources().getString(R.string.labelRemaining) + ndfQuiz.remaining());
-				
+		remainingText.setText(getResources().getString(R.string.labelRemaining) + ndfQuiz.remaining());					
+		
 		NDFCardFace curFace = ndfQuiz.current().getFace(currentFaceNum);
 		quizText.setText(curFace.getText());
 		quizText.setTextSize(curFace.getTextSize());
@@ -169,11 +174,7 @@ public class ActNDFQuiz
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 	        setContentView(R.layout.ndfquizcomplete);
-	        /*
-	        LayoutParams params = getWindow().getAttributes(); 
-            params.height = LayoutParams.FILL_PARENT;
-            params.width = LayoutParams.FILL_PARENT;
-            getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);*/ 
+	        setCancelable(false);
 	    	init();	    		       
 		}			
 		

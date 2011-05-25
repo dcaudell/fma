@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ZoomControls;
 
 public class ActNDFDeckEditor extends ActBase {	
 	static final int DIALOG_DELFACE = 0;
@@ -304,15 +305,15 @@ public class ActNDFDeckEditor extends ActBase {
 				}
 			});
     		
-    		ImageButton growButton = (ImageButton) findViewById(R.id.ndfcardeditorButtonGrow);
-    		growButton.setOnClickListener(new View.OnClickListener() {				
+    		
+    		ZoomControls zoomControls = (ZoomControls) findViewById(R.id.ndfcardeditorZoomControls);    		
+    		zoomControls.setOnZoomInClickListener(new View.OnClickListener() {				
 				public void onClick(View v) {
 					resizeText(getResources().getInteger(R.integer.fontscaleCardTextIncrement));				
 				}
 			});
-    		
-    		ImageButton shrinkButton = (ImageButton) findViewById(R.id.ndfcardeditorButtonShrink);
-    		shrinkButton.setOnClickListener(new View.OnClickListener() {				
+    		    		    		    	
+    		zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {				
 				public void onClick(View v) {
 					resizeText(getResources().getInteger(R.integer.fontscaleCardTextIncrement)  * -1);
 				}
@@ -355,8 +356,7 @@ public class ActNDFDeckEditor extends ActBase {
     		Button prevButton = (Button) findViewById(R.id.ndfcardeditorButtonPrev);
     		Button addButton = (Button) findViewById(R.id.ndfcardeditorButtonAdd);
     		Button delButton = (Button) findViewById(R.id.ndfcardeditorButtonDel);    		
-    		ImageButton growButton = (ImageButton) findViewById(R.id.ndfcardeditorButtonGrow);
-    		ImageButton shrinkButton = (ImageButton) findViewById(R.id.ndfcardeditorButtonShrink);    		
+    		ZoomControls zoomControls = (ZoomControls) findViewById(R.id.ndfcardeditorZoomControls);    		    	
     		Spinner spinner = (Spinner) findViewById(R.id.ndfcardeditorSpinner);
     		TextView cardText = (TextView) findViewById(R.id.ndfcardeditorText);    		
     		
@@ -380,12 +380,11 @@ public class ActNDFDeckEditor extends ActBase {
     		
     		if (card == null){    			
     			addButton.setEnabled(false);
-    			delButton.setEnabled(false);
-    			growButton.setEnabled(false);
+    			delButton.setEnabled(false);    			
     			nextButton.setEnabled(false);
     			prevButton.setEnabled(false);    			
-    			shrinkButton.setEnabled(false);
     			spinner.setEnabled(false);
+    			zoomControls.setEnabled(false);
     			
     			cardLabel.setText("");
     			
@@ -395,16 +394,19 @@ public class ActNDFDeckEditor extends ActBase {
     			return;
     		}
     		
-    		cardLabel.setText(getResources().getString(R.string.labelCard) + " " + (currentCardNum + 1));
+    		cardLabel.setText(getResources().getString(R.string.labelCard) 
+    				+ " " 
+    				+ (currentCardNum + 1)
+    				+ " / "
+    				+ deck.size());
     		
     		if (card.size() == 0){
     			addButton.setEnabled(true);
-    			delButton.setEnabled(false);
-    			growButton.setEnabled(false);
+    			delButton.setEnabled(false);    			
     			nextButton.setEnabled(false);
-    			prevButton.setEnabled(false);    			    		
-    			shrinkButton.setEnabled(false);
-    			spinner.setEnabled(false);    			    			    		
+    			prevButton.setEnabled(false);    			    		    			
+    			spinner.setEnabled(false);
+    			zoomControls.setEnabled(false);
     			
     			cardText.setEnabled(false);
     			cardText.setText(getResources().getString(R.string.textAddASide));
@@ -415,8 +417,9 @@ public class ActNDFDeckEditor extends ActBase {
     		
     		addButton.setEnabled(true);
 			delButton.setEnabled(true);
-			growButton.setEnabled(true);
-    		
+			zoomControls.setEnabled(true);
+			spinner.setEnabled(true);
+			
 			if (currentFaceNum < (card.size() - 1))
 				nextButton.setEnabled(true);
 			else 
@@ -426,10 +429,7 @@ public class ActNDFDeckEditor extends ActBase {
 				prevButton.setEnabled(true);
 			else
 				prevButton.setEnabled(false);
-    		    		
-			shrinkButton.setEnabled(true);
-			spinner.setEnabled(true);								
-			
+    		    					
 			cardText.setEnabled(true);
 			cardText.setText(card.getFace(currentFaceNum).getText());
 			cardText.setTextSize(card.getFace(currentFaceNum).getTextSize());

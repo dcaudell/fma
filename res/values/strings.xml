@@ -39,7 +39,7 @@
     <string name="labelHigh">High: </string>
     <string name="labelIncorrect">Incorrect</string>
     <string name="labelIncorrectWithColon">Incorrect: </string>
-    <string name="labelHuh">Huh?</string>
+    <string name="labelHuh">Squish</string>
     <string name="labelKinda">Kinda</string>
     <string name="labelMarketCap">Market Capitalization: </string>
     <string name="labelModified">Modified: </string>
@@ -63,7 +63,7 @@
     <string name="labelRetry">Retry</string>
 	<string name="labelSave">Save</string>
 	<string name="labelScore">Score: </string>        
-    <string name="labelSeeWhatIMean">See what I mean?</string>
+    <string name="labelSeeWhatIMean">Unsquish</string>
     <string name="labelSide">Side: </string>
     <string name="labelSymbol">Symbol: </string>
     <string name="labelTest">Test</string>

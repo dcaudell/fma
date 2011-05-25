@@ -72,7 +72,7 @@ public class WebserviceXQueryDaemon extends BaseQueryDaemon {
             try {
                 if (!isRunning())
                     return;
-                doQuery(symbol.getSymbol());
+                doQuery(symbol.getSymbol());                
             }
             catch(Exception e) {
                 Log.out("Query failed for symbol: " + symbol.getSymbol());

@@ -5,30 +5,28 @@
     android:orientation="vertical" 
     android:id="@+id/ndfcardLayout" 
     android:background="@drawable/indexcard">
-    <LinearLayout 
-    	android:layout_width="match_parent" 
-    	android:id="@+id/ndfcardeditorLayoutHeader" 
+    <LinearLayout
+    	android:id="@+id/ndfcardeditorLayoutHeader"
+    	android:orientation="vertical" 
+    	android:layout_width="match_parent"
     	android:layout_height="wrap_content" 
-    	android:layout_marginTop="5dp" 
-    	android:layout_marginLeft="5dp">        
-        <ImageButton
-        	android:id="@+id/ndfcardeditorButtonGrow"        	        	
-        	android:layout_height="@dimen/heightShrinkGrowButton"
-        	android:layout_width="@dimen/widthShrinkGrowButton"
-        	android:src="@drawable/icon_grow"/>
-		<ImageButton
-			android:id="@+id/ndfcardeditorButtonShrink"					
-			android:layout_marginLeft="5dp"
-			android:layout_height="@dimen/heightShrinkGrowButton"
-        	android:layout_width="@dimen/widthShrinkGrowButton"  						
-			android:src="@drawable/icon_shrink"/>
+    	android:layout_marginTop="5dp">
+        <ZoomControls 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="wrap_content" 
+        	android:id="@+id/ndfcardeditorZoomControls" android:layout_gravity="center_horizontal">
+        	<!--
+            <ZoomControls 
+            	android:id="@+id/ndfcardeditorButtonShrink"/>            	
+            <ZoomControls 
+            	android:id="@+id/ndfcardeditorButtonGrow"/> 
+            	-->
+        </ZoomControls>
 		<TextView 
 			android:id="@+id/ndfcardeditorLabelCard" 
-			android:layout_width="fill_parent" 
-			android:layout_height="wrap_content"
-			android:layout_marginRight="5dp"
-			android:gravity="right"
-			android:text="Card: #"/>						  			
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"				
+			android:text="Card: # / #" android:paddingLeft="5dp"/>						  			
     </LinearLayout>
     <ScrollView
         android:id="@+id/ndfcardeditorScrollView"

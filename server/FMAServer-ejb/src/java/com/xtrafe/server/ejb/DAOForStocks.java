@@ -10,6 +10,8 @@ import com.xtrafe.server.ejb.entity.StockEntity;
 import com.xtrafe.server.ejb.entity.SymbolEntity;
 import com.xtrafe.server.ejb.entity.TickDayEntity;
 import com.xtrafe.server.ejb.entity.TickEntity;
+import com.xtrafe.server.log.Log;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -21,7 +23,7 @@ import javax.persistence.TypedQuery;
 public class DAOForStocks {
     
     @PersistenceContext
-    EntityManager em;
+    EntityManager em;        
     
     public SharedStockList getAllStocks() {
         SharedStockList sharedStockList = new SharedStockList();
@@ -115,5 +117,24 @@ public class DAOForStocks {
         stock.setFrom(tickEntity);
                 
         return stock;
-    }            
+    }
+    
+    public void randomizeStocks() {
+        TypedQuery<StockEntity> findStocks = em.createNamedQuery("StockEntity.findAll", StockEntity.class);
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        List<StockEntity> stocks = findStocks.getResultList();
+        for (StockEntity stock : stocks){            
+            SharedStockDetail ssd = getStock(stock.getSymbol());
+            double percentChange = Math.random() * 0.1;
+            percentChange = (Math.random() > 0.5) ? -1.0 * percentChange : percentChange;
+            percentChange = (Math.random() > 0.9) ? 0.0 : percentChange;
+            double current = ssd.getPrevious() + (ssd.getPrevious() * percentChange);
+            current = Double.valueOf(String.format("%.2f", current));
+            stock.setPrevious(current);
+            stock.setPercentageChange(
+                    ((percentChange > 0) ? "+" : "") +
+                    String.format("%.2f%%", percentChange * 100.0));            
+            Log.out("Randomized Stock " + stock.getSymbol());
+        }
+    }
 }
