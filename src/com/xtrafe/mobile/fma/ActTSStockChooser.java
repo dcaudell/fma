@@ -257,7 +257,7 @@ public class ActTSStockChooser
 		}			
 	}
 	
-	private class PopulateTask extends TSLoadingTask {
+	private class PopulateTask extends LoadingTask {
 		
 		private PopulateTask(){
 			super(ActTSStockChooser.this);
@@ -346,7 +346,7 @@ public class ActTSStockChooser
 			new PopulateTask().execute();
 		}
 		
-		private class PopulateTask extends TSLoadingTask {
+		private class PopulateTask extends LoadingTask {
 
 			public PopulateTask() {
 				super(ActTSStockChooser.this);

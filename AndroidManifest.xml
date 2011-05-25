@@ -39,6 +39,9 @@
 			android:name="ActOpenGL"/>
 		<activity
 			android:name="ActTSStockChooser"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity
+			android:name="ActEBListings"
 			android:configChanges="keyboardHidden|orientation"/>     			
     </application>
 </manifest>

@@ -488,11 +488,17 @@ exists or setup the property manually. For example like this:
                 COMPILATION SECTION
             -->
     <target depends="init" if="no.dist.ear.dir" name="-deps-module-jar" unless="no.deps">
+        <ant antfile="${project.FMAEbay}/build.xml" inheritall="false" target="jar">
+            <property name="deploy.on.save" value="false"/>
+        </ant>
         <ant antfile="${project.FMASharedClasses}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
     </target>
     <target depends="init" if="dist.ear.dir" name="-deps-ear-jar" unless="no.deps">
+        <ant antfile="${project.FMAEbay}/build.xml" inheritall="false" target="jar">
+            <property name="deploy.on.save" value="false"/>
+        </ant>
         <ant antfile="${project.FMASharedClasses}/build.xml" inheritall="false" target="jar">
             <property name="deploy.on.save" value="false"/>
         </ant>
@@ -507,23 +513,26 @@ exists or setup the property manually. For example like this:
         <!-- You can override this target in the ../build.xml file. -->
     </target>
     <target depends="compile" if="is.server.weblogic" name="library-inclusion-in-archive">
-        <basename file="${reference.FMASharedClasses.jar}" property="manifest.reference.FMASharedClasses.jar"/>
         <basename file="${file.reference.postgresql-8.4-702.jdbc4.jar}" property="manifest.file.reference.postgresql-8.4-702.jdbc4.jar"/>
         <basename file="${file.reference.finding.jar}" property="manifest.file.reference.finding.jar"/>
         <basename file="${file.reference.log4j-1.2.16.jar}" property="manifest.file.reference.log4j-1.2.16.jar"/>
+        <basename file="${reference.FMASharedClasses.jar}" property="manifest.reference.FMASharedClasses.jar"/>
+        <basename file="${reference.FMAEbay.jar}" property="manifest.reference.FMAEbay.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.reference.FMASharedClasses.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.postgresql-8.4-702.jdbc4.jar}"/>
-            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.finding.jar}"/>
-            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.log4j-1.2.16.jar}"/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 "/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.postgresql-8.4-702.jdbc4.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.finding.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.log4j-1.2.16.jar}"/>
+            <attribute name="jar-4-Extension-Name" value="${manifest.reference.FMASharedClasses.jar}"/>
+            <attribute name="jar-5-Extension-Name" value="${manifest.reference.FMAEbay.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
-        <copyfiles files="${reference.FMASharedClasses.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.postgresql-8.4-702.jdbc4.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.finding.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.log4j-1.2.16.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${reference.FMASharedClasses.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${reference.FMAEbay.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">
@@ -873,6 +882,7 @@ exists or setup the property manually. For example like this:
                 CLEANUP SECTION
             -->
     <target depends="init" if="no.dist.ear.dir" name="deps-clean" unless="no.deps">
+        <ant antfile="${project.FMAEbay}/build.xml" inheritall="false" target="clean"/>
         <ant antfile="${project.FMASharedClasses}/build.xml" inheritall="false" target="clean"/>
     </target>
     <target depends="init" name="-do-clean">

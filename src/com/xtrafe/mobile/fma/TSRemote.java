@@ -1,5 +1,6 @@
 package com.xtrafe.mobile.fma;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -20,7 +21,25 @@ public class TSRemote {
 		Gson gson = new Gson();
 		Reader reader = new InputStreamReader(getHTTPDataStream(uri, params));		
 		return gson.fromJson(reader, prototype);		
-	}	
+	}
+	
+	public static String getRemoteString(URI uri, HttpParams params) {
+		try {		
+			Reader reader = new InputStreamReader(getHTTPDataStream(uri, params));		
+			BufferedReader br = new BufferedReader(reader);
+			StringBuffer buffer = new StringBuffer();
+			String curString = br.readLine();
+			while (curString != null){
+				buffer.append(curString);
+				curString = br.readLine();
+			}
+			return buffer.toString();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public static InputStream getHTTPDataStream(URI uri, HttpParams params){
 		DefaultHttpClient httpClient = new DefaultHttpClient();		
@@ -30,7 +49,7 @@ public class TSRemote {
 			if (params != null)
 				method.setParams(params);
 			MyLog.logI("Sending JSON request to " + method.getURI());
-			HttpResponse response = httpClient.execute(method);			
+			HttpResponse response = httpClient.execute(method);				
 			data = response.getEntity().getContent();
 		} 
 		catch (Exception e) {

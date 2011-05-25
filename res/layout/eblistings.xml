@@ -22,12 +22,12 @@
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content">
         <EditText 
-        	android:id="@+id/eblistingsFilter"
+        	android:id="@+id/eblistingsSearch"
         	android:layout_width="wrap_content" 
         	android:layout_height="wrap_content"         	
         	android:layout_weight="1"/>
         <ImageButton 
-        	android:id="@+id/eblistingsButtonFilter" 
+        	android:id="@+id/eblistingsButtonSearch" 
         	android:layout_height="wrap_content" 
         	android:layout_width="wrap_content" 
         	android:src="@drawable/icon_search" 

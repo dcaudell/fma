@@ -59,22 +59,5 @@
         <delete dir="${build.generated.dir}/jax-wsCache/stockquote"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/com/xtrafe/server/ejb/webservicex"/>
     </target>
-    <target name="wsimport-client-ShoppingService" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/ShoppingService"/>
-        <property name="wsdl-ShoppingService" location="${meta.inf}/xml-resources/web-service-references/ShoppingService/wsdl/ShoppingService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ShoppingService" destdir="${build.generated.dir}/jax-wsCache/ShoppingService" wsdl="${wsdl-ShoppingService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="ShoppingService.wsdl" xnocompile="true" xendorsed="true" package="com.ebay.services.shopping">
-            <depends file="${wsdl-ShoppingService}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/ShoppingService"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/ShoppingService">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-ShoppingService" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/ShoppingService"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/com/ebay/services/shopping"/>
-    </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-xRealTime, wsimport-client-stockquote, wsimport-client-ShoppingService"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-xRealTime, wsimport-client-stockquote"/>
 </project>

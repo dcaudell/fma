@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>       
+	<string name="demoActEBListings">eBay Client</string>
     <string name="demoActEvora">Landscape Layout</string>
     <string name="demoActLogButton">Logging</string>
     <string name="demoActNDFDeckEditor">Flashcard Editor</string>
@@ -11,7 +12,8 @@
     <string name="extQuizExtension">.quiz</string>        
     <string name="labelAdd">Add</string>
     <string name="labelAnnualRange">Annual Range: </string>
-    <string name="labelBids">Bids</string>    
+    <string name="labelBid">Bid</string>
+    <string name="labelBids">Bids</string>
     <string name="labelCancel">Cancel</string>
     <string name="labelCard">Card:</string>
     <string name="labelChange">Change:</string>
@@ -28,7 +30,7 @@
     <string name="labelDelete">Delete</string>
     <string name="labelDescription">Description: </string>
     <string name="labelEarns">Earnings per Share: </string>
-    <string name="labelEnds">Ends: </string>
+    <string name="labelEnds">Ends:  </string>
     <string name="labelEdit">Edit</string>
     <string name="labelFace">Side </string>
     <string name="labelFilter">Filter...</string>

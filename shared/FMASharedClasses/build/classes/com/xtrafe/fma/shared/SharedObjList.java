@@ -8,30 +8,30 @@ public abstract class SharedObjList<T>
     extends SharedObjBase
     implements Iterable<T>
 {
-    private List<T> symbols = new ArrayList<T>();
+    private List<T> items = new ArrayList<T>();
 
     public void add(T member){
-        symbols.add(member);
+        items.add(member);
     }
     
     public T get(int index){
-        return symbols.get(index);
+        return items.get(index);
     }
     
     public int size() {
-        return symbols.size();
+        return items.size();
     }
     
     @Override
     public Iterator<T> iterator() {
-        return symbols.iterator();
+        return items.iterator();
     }
     
-    public List<T> getSymbols() {
-        return symbols;
+    public List<T> getItems() {
+        return items;
     }
 
-    public void setSymbols(List<T> symbols) {
-        this.symbols = symbols;
+    public void setItems(List<T> symbols) {
+        this.items = symbols;
     }               
 }

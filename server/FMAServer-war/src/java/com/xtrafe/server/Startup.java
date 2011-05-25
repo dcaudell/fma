@@ -35,6 +35,6 @@ public class Startup implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {        
-        webserviceXQueryDaemon.stop();
+        //webserviceXQueryDaemon.stop();
     }    
 }
